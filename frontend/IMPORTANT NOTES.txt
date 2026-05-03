@@ -1,0 +1,4 @@
+agregar dentro de  package.json/ scripts para la version 20 de nodejs
+
+"start": "react-scripts --openssl-legacy-provider start", 
+"build": "react-scripts --openssl-legacy-provider build",
