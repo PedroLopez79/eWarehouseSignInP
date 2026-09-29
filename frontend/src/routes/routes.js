@@ -2,10 +2,10 @@ export const appRoutes = {
   label: 'app',
   children: [
     {
-      name: 'Sign In',
-      icon: 'file-alt',
-      to: '/app/calendar',
-      active: true
+  name: 'Sign In',
+  icon: 'file-alt',
+  to: '/_Manager/sign-in',   // was '/app/calendar'
+  active: true
     },
     {
       name: 'Warehouse',

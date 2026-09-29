@@ -3,12 +3,19 @@ from django.contrib.auth.models import User
 
 from rest_framework import generics
 from .serializers import UserSerializer, NoteSerializer, TbluserSerializer, MyTokenObtainPairSerializer, RegisterSerializer, TblUserType
+from .serializers import DsiTypeSerializer
+from .serializers import DsiCarrierSerializer
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import Note
 from .models import Tbluser
+from .models import DsiType
+from .models import DsiCarrier
 
 #Login User
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -63,3 +70,27 @@ class GetUserType(generics.ListCreateAPIView):
         pk = self.kwargs['pk']
         return Tbluser.objects.filter(userid=pk)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def dsi_types_list(request):
+    queryset = DsiType.objects.exclude(dsi_type__isnull=True)
+
+    # optional: /api/dsi-types/?branch_id=2
+    branch_id = request.query_params.get('branch_id')
+    if branch_id:
+        queryset = queryset.filter(branch_id=branch_id)
+
+    serializer = DsiTypeSerializer(queryset, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def dsi_carrier_list(request):
+    queryset = DsiCarrier.objects.exclude(dsi_carrierid__isnull=True)
+
+    branch_id = request.query_params.get('branch_id')
+    if branch_id:
+        queryset = queryset.filter(branch_id=branch_id)
+
+    serializer = DsiCarrierSerializer(queryset, many=True)
+    return Response(serializer.data)

@@ -6,6 +6,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import Note
 from .models import Tbluser
+from .models import DsiType
+from .models import DsiCarrier
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     username_field = 'userid'
@@ -89,6 +91,16 @@ class TbluserSerializer(serializers.ModelSerializer):
         model = Tbluser
         fields = ["userid", "password", "email"]
         extra_kwargs = {"UserID": {"read_only": True}}
+
+class DsiTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DsiType
+        fields = ['dsi_type', 'dsi_idtype', 'dsi_id_type', 'branch_id']
+
+class DsiCarrierSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DsiCarrier
+        fields = ['dsi_carrierid', 'dsi_companyname', 'dsi_telephonenum', 'dsi_faxnum', 'dsi_contactname', 'dsi_active', 'dsi_paqueteria', 'dsi_branchid']
 
 class TblUserType(serializers.ModelSerializer):
     class Meta:

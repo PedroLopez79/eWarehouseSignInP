@@ -52,3 +52,37 @@ class Note(models.Model):
     class Meta:
         managed = False
         db_table = 'Note'
+
+class DsiType(models.Model):
+    """
+    Read-only mapping to the SQL Server view VwDSI_types.
+    managed=False tells Django: never create/alter/drop this table — it already exists as a view.
+    """
+    dsi_type = models.CharField(db_column='DSI_Type', max_length=50)
+    dsi_idtype = models.CharField(db_column='DSI_idType', max_length=10)
+    dsi_id_type = models.IntegerField(db_column='DSI_id_type', primary_key=True)
+    branch_id = models.IntegerField(db_column='BranchID')
+
+    class Meta:
+        managed = False
+        db_table = 'VwDSI_types'
+
+    def __str__(self):
+        return f'{self.dsi_type} ({self.branch_id})'
+
+class DsiCarrier(models.Model):
+    dsi_carrierid = models.IntegerField(db_column='CarrierID', primary_key=True)
+    dsi_companyname = models.CharField(db_column='CompanyName', max_length=50)
+    dsi_telephonenum = models.CharField(db_column='TelephoneNum', max_length=50)
+    dsi_faxnum = models.CharField(db_column='FaxNum', max_length=50)
+    dsi_contactname = models.CharField(db_column='ContactName', max_length=50)
+    dsi_active = models.BooleanField(db_column='Active', default=True)
+    dsi_paqueteria = models.BooleanField(db_column='Paqueteria', default=True)
+    dsi_branchid = models.IntegerField(db_column='BranchID')
+
+    class Meta:
+        managed = False
+        db_table = 'tblCarrier'
+
+    def __str__(self):
+        return f'{self.dsi_companyname} ({self.dsi_branchid})'

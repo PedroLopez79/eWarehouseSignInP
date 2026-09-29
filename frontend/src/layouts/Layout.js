@@ -189,6 +189,8 @@ import HomeDashBoard  from '_Manager/HomeDashBoard';
 import CustomerHomeDashBoard from '_Customer/CustomerHomeDashBoard';
 import CustomerMainLayout from './CustomerMainLayout';
 
+import DriverRegistrationForm from 'components/app/driver-registration/DriverRegistrationForm';
+
 const Layout = () => {
   const HTMLClassList = document.getElementsByTagName('html')[0].classList;
   useContext(AppContext);
@@ -215,6 +217,7 @@ const Layout = () => {
         {/*- ------------- MANAGER LAYOUT ----------------  */}
         <Route element={<MainLayout />}>
           <Route path="_Manager" element={<HomeDashBoard/>} />
+          <Route path="_Manager/sign-in" element={<DriverRegistrationForm/>} />
         </Route>
 
         {/*- ------------- CUSTOMER LAYOUT ----------------  */}
